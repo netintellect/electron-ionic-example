@@ -1,0 +1,55 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only [disabled]="!addressForm.valid" (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+      <button color="danger" ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Edit Address</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="addressForm">
+    <input type="hidden" formControlName="addressId" />
+    <ion-item>
+      <ion-segment formControlName="icon" color="primary">
+        <ion-segment-button *ngFor="let theIcon of iconList" icon-only [value]="theIcon">
+          <ion-icon [name]="theIcon"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Name" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Address" formControlName="addressLine1" (ngModelChange)="address.addressStatus=''">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Address 2" formControlName="addressLine2" (ngModelChange)="address.addressStatus=''"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="City/Town" formControlName="community" (ngModelChange)="address.addressStatus=''"></ion-input>
+      <ion-input type="text" placeholder="State" formControlName="state" (ngModelChange)="address.addressStatus=''"></ion-input>
+      <ion-input type="text" placeholder="Zip Code" formControlName="postalCode" (ngModelChange)="address.addressStatus=''"></ion-input>
+      <ion-input type="text" name="addressStatus" formControlName="addressStatus" disabled></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!addressForm.valid">
+      <p>{{formErrors}}</p>
+    </ion-item>
+    <ion-item *ngIf="!address.addressStatus">
+      <p>Enter a valid address to preview a map</p>
+    </ion-item>
+    <ion-item *ngIf="address.addressStatus">
+      <agm-map [latitude]="getLatitude()" [longitude]="getLongitude()" [zoom]="18">
+        <agm-marker [latitude]="getLatitude()" [longitude]="getLongitude()">
+        </agm-marker>
+      </agm-map>
+    </ion-item>
+  </form>
+</ion-content>

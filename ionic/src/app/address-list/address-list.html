@@ -1,0 +1,47 @@
+<ion-content>
+  <div class="wr-well">
+    <h1>Travel where you want</h1>
+    <h6>Make sure emergency services can always find you. Select your current location below.</h6>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let address of addresses">
+          <ion-card class="card">
+            <ion-item>
+              <button clear ion-button icon-only item-right 
+                *ngIf="address.id!==provisionedAddressId"
+                (click)="selectLocation(address)">
+                <ion-icon name="locate"></ion-icon>
+              </button>
+              <button clear ion-button icon-only item-right disabled
+                *ngIf="address.id===provisionedAddressId">
+                <ion-icon  
+                  name="checkmark">
+                </ion-icon>
+              </button>
+              <button clear ion-button icon-only item-right (click)="edit(address)">
+                <ion-icon name="create"></ion-icon>
+              </button>
+              <button clear ion-button icon-only item-right 
+                (click)="remove(address)">
+                <ion-icon color="danger" name="trash"></ion-icon>
+              </button>
+              <ion-icon item-left large [name]="address.icon"></ion-icon>
+              <strong color="dark">{{address.name}}</strong>
+              <p>{{address.addressLine1}}
+                <span *ngIf="address.addressLine2">{{addressLine2}}</span>
+                <span>{{address.community}}</span>
+                <span>, {{address.state}}</span>
+                <span>{{address.postalCode}}</span>
+                <br /> Last Selected: {{address.lastUsed}}</p>
+            </ion-item>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+    <ion-fab bottom left #fab>
+    <button ion-fab (click)="add()"><ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

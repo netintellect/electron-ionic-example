@@ -1,0 +1,87 @@
+{
+  "name": "dispatcher",
+  "productName": "Dispatcher",
+  "author": "Michael Callaghan",
+  "homepage": "http://www.walkingriver.com/",
+  "description": "An Electron project",
+  "version": "0.0.8",
+  "main": "./app/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "mon": "nodemon --exec \"npm start\"",
+    "build": "cd ionic && yarn install && yarn run ionic:build && yarn run deploy",
+    "build:prod": "cd ionic && yarn install && yarn run ionic:build && yarn run deploy",
+    "icons": "nicns --in app/images/icon.png --out build/icons.icns",
+    "package:macos": "electron-packager . --icon=build/icons.icns --overwrite --ignore=\"(\\.(icns|md))|(.+\\.lock$)|(\\/ionic\\/)|(^\\..+$)|(typings)|((nodemon|tslint)\\.json)\"",
+    "package:win": "electron-packager . --icon=server/images/icon.ico --overwrite --ignore=\"(\\.(icns|md))|(.+\\.lock$)|(\\/ionic\\/)|(^\\..+$)|(typings)|((nodemon|tslint)\\.json)\"",
+    "pack": "build --dir",
+    "publish": "run-s build:prod icons release",
+    "release": "build -p always"
+  },
+  "build": {
+    "appId": "com.conveyant.dispatcher",
+    "files": [
+      "app/**",
+      "!ionic/**${/*}",
+      "!**/node_modules/*/build${/*}",
+      "**/node_modules/*/build/**/*.node",
+      "!**/node_modules/*/bin/**/*.node",
+      "!**/node_modules/*/deps${/*}",
+      "!**/node_modules/**/{*.cc,*.obj,*.pdb}",
+      "**/node_modules/node-pre-gyp${/*}"
+    ],
+    "directories": {
+      "output": "./dist"
+    },
+    "mac": {
+      "category": "public.app-category.business"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "target": "nsis"
+    },
+    "nsis": {
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "perMachine": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "walkingriver",
+        "repo": "dispatcher"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-log": "^2.2.6",
+    "electron-updater": "^2.16.1",
+    "lodash": "^4.14.85"
+  },
+  "devDependencies": {
+    "electron": "1.7.9",
+    "electron-builder": "^19.4.2",
+    "electron-packager": "^8.7.1",
+    "eslint": "^4.0.0",
+    "node-icns": "0.0.4",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2",
+    "rimraf": "^2.6.1"
+  }
+}

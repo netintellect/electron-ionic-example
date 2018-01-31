@@ -1,0 +1,37 @@
+<ion-content> 
+  <agm-map [latitude]="getLatitude()" [longitude]="getLongitude()" [zoom]="18">
+    <agm-marker [latitude]="getLatitude()" [longitude]="getLongitude()">
+      <agm-info-window [disableAutoPan]="true">
+        <div *ngIf="located()">
+          <strong>
+            Current Location:
+          </strong>
+          <br/> {{address}}
+        </div>
+        <div *ngIf="!located()">
+          <strong>Not protected</strong><br/> Current location (estimated)
+        </div>
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+
+  <ion-fab top left #fab>
+    <button ion-fab>
+      <ion-icon name="more"></ion-icon>
+    </button>
+    <ion-fab-list side="right">
+      <button ion-fab (click)="gotoSetup(fab)">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+      <button ion-fab (click)="gotoLocations(fab)">
+        <ion-icon name="locate"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <div class="wr-well wr-float">
+    <h1 *ngIf="located()">Congratulations - You're protected!</h1>
+    <h1 *ngIf="!located()" class="danger">Please set your current location.</h1>
+  </div>
+
+</ion-content>

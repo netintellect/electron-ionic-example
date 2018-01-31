@@ -1,0 +1,18 @@
+<ion-content>
+  <div class="wr-well">
+    <h1>Go Far - Stay Safe</h1>
+    <h6>Before you begin, we need your name and phone number.</h6>
+    <ion-list>
+      <ion-item>
+        <ion-input type="text" placeholder="Name" [(ngModel)]="personInfo.name">
+        </ion-input>
+        <ion-input type="text" placeholder="Phone" [(ngModel)]="personInfo.phone">
+        </ion-input>
+        <button ion-button outline item-right icon-right (click)="setInfo()">
+      Set
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
